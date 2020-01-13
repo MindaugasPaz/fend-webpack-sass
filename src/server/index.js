@@ -5,9 +5,6 @@ var bodyParser = require('body-parser')
 var cors = require('cors')
 
 var json = {
-    'title': 'test json response',
-    'message': 'this is a message',
-    'time': 'now'
 }
 
 const app = express()
@@ -30,6 +27,12 @@ app.get('/', function (req, res) {
 app.get('/test', function (req, res) {
     res.json(mockAPIResponse);
 })
+
+app.post('/add', addData)
+
+function addData (request, response){
+    json.temperature = request.body.temperature;
+}
 
 // designates what port the app will listen to for incoming requests
 app.listen(8081, function () {
