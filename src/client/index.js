@@ -1,6 +1,6 @@
 import { checkForName } from './js/nameChecker'
 // import { handleSubmit } from './js/formHandler'
-import { performAction } from './js/formHandler2'
+import { handleSubmit2 } from './js/formHandler2'
 
 import './styles/resets.scss'
 import './styles/base.scss'
@@ -15,5 +15,5 @@ alert("I EXIST")
 export {
     checkForName,
     // handleSubmit,
-    performAction
+    handleSubmit2
 }

@@ -1,67 +1,20 @@
-let baseURL = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-let key = '661daa7377189bfe425b6af1f07ac279';
+function handleSubmit2(event) {
+    event.preventDefault()
 
-document.getElementById('name').addEventListener('click', performAction);
+    // check what text was put into the form field
+    let formText = document.getElementById('name').value
 
-function performAction(e){
-    e.preventDefault()
-
-    const postCode = document.getElementById('name').value;
-    getTemperature(baseURL, postCode, key)
-    .then(function (data){
-        // Add data to POST request
-        postData('http://localhost:8081/addWeatherData', {temperature: data.main.temp } )
-        // Function which updates UI
-        .then(function() {
-            updateUI()
-        })
+    Client.checkForName(formText)
+    // baseURL = 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=661daa7377189bfe425b6af1f07ac279'
+    console.log("::: Form Submitted :::")
+    // fetch('http://localhost:8081/test')
+    fetch('http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=661daa7377189bfe425b6af1f07ac279')
+    .then(res => {
+        return res.json()
+    })
+    .then(function(data) {
+        document.getElementById('results').innerHTML = data.main.temp;
     })
 }
 
-// Async GET
-const getTemperature = async (baseURL, code, key)=>{
-// const getTemperatureDemo = async (url)=>{
-    const response = await fetch(baseURL + code + ',us' + '&APPID=' + key)
-    console.log(response);
-    try {
-        const data = await response.json();
-        console.log(data);
-        return data;
-    }
-    catch(error) {
-        console.log('error', error);
-    }
-}
-
-// Async POST
-const postData = async (url = '', data = {}) => {
-    const postRequest = await fetch(url, {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    try {
-        const newData = await postRequest.json();
-        return newData;
-    }
-    catch (error) {
-        console.log('Error', error);
-    }
-}
-
-// Update user interface
-const updateUI = async () => {
-    const request = await fetch('http://localhost:8081/');
-    try {
-        const allData = await request.json();
-        document.getElementById('results').innerHTML = allData.temperature;
-    }
-    catch (error) {
-        console.log('error', error);
-    }
-}
-
-export {performAction}
+export { handleSubmit2 }
