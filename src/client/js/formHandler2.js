@@ -1,4 +1,4 @@
-function handleSubmit(event) {
+function handleSubmit2(event) {
     event.preventDefault()
 
     // check what text was put into the form field
@@ -7,14 +7,14 @@ function handleSubmit(event) {
     Client.checkForName(formText)
 
     console.log("::: Form Submitted :::")
-    fetch('http://localhost:8081/test')
+    fetch('http://api.openweathermap.org/data/2.5/weather?q=Brussels,be&APPID=661daa7377189bfe425b6af1f07ac279')
     .then(res => {
         return res.json()
     })
     .then(function(data) {
-        // document.getElementById('results').innerHTML = data.temperature;
-        document.getElementById('results').innerHTML = data.temperature + data.kitas;
+        console.log(data)
+        document.getElementById('results').innerHTML = data.main.temp;
     })
 }
 
-export { handleSubmit }
+export { handleSubmit2 }
